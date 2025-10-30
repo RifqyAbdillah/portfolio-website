@@ -30,6 +30,8 @@ body {
     color: var(--text-primary);
     background: var(--dark-bg);
     overflow-x: hidden;
+    position: relative;
+    z-index: 0;
 }
 
 /* Background Effects */
@@ -122,6 +124,18 @@ body::before {
 .nav-download-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(255, 0, 255, 0.3);
+}
+
+.nav-toggle {
+    display: none; /* Sembunyikan checkbox */
+}
+
+.nav-toggle-label {
+    display: none; /* Sembunyikan di desktop */
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    cursor: pointer;
+    z-index: 1001; /* Pastikan di atas nav-links */
 }
 
 /* Welcome Section */
@@ -741,10 +755,79 @@ section {
 }
 
 @media (max-width: 768px) {
+    /* Tampilkan hamburger icon di mobile */
+    .nav-toggle-label {
+        display: block;
+    }
+
+    /* Sembunyikan nav-links di mobile secara default */
     .nav-links {
-        display: none;
+    /* Pertahankan semua style posisi & layout */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: rgba(10, 10, 15, 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+    /* Pastikan display: flex dan atur arahnya */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0;
+
+    /* --- Tambahkan ini untuk Transisi Halus --- */
+
+    /* 1. Atur kondisi awal (tersembunyi) */
+    opacity: 0;
+    transform: translateY(-20px); /* Mulai 20px di atas */
+    visibility: hidden;
+    pointer-events: none; /* Tidak bisa diklik saat tersembunyi */
+
+    /* 2. Tentukan durasi transisi */
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+    }
+
+    .nav-links a {
+        padding: 1rem;
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav-links a:hover {
+        background: rgba(0, 212, 255, 0.1);
     }
     
+    .nav-download-btn {
+        margin-top: 0.5rem;
+        width: 80%;
+        justify-content: center;
+    }
+
+    /* Logika untuk menampilkan menu saat checkbox di-klik */
+    .nav-toggle:checked ~ .nav-links {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    pointer-events: auto;
+    }
+
+    /* Ubah ikon hamburger (bars) menjadi ikon tutup (times) */
+    .nav-toggle:checked ~ .nav-toggle-label i::before {
+        content: '\f00d'; /* Font Awesome 'times' (close) icon */
+        font-family: 'Font Awesome 6 Free'; 
+        font-weight: 900;
+    }
+
+    .nav-toggle-label i::before {
+        content: '\f0c9'; /* Font Awesome 'bars' icon */
+        font-family: 'Font Awesome 6 Free'; 
+        font-weight: 900;
+    }
+
+    
+    /* Atur ulang style responsif lainnya */
     .welcome-text h1 {
         font-size: 2.5rem;
     }
@@ -1045,5 +1128,18 @@ section {
         width: 35px;
         height: 35px;
         font-size: 1.2rem;
+    }
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .btn.primary:hover {
+        transform: none; /* Nonaktifkan animasi gerak */
+        box-shadow: var(--glow); /* Kembalikan ke shadow normal */
+    }
+
+    .btn.secondary:hover {
+        background: transparent; /* Kembalikan ke background normal */
+        transform: none; /* Nonaktifkan animasi gerak */
+        color: var(--text-primary); /* Kembalikan ke warna normal */
     }
 }
