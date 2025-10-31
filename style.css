@@ -30,8 +30,6 @@ body {
     color: var(--text-primary);
     background: var(--dark-bg);
     overflow-x: hidden;
-    position: relative;
-    z-index: 0;
 }
 
 /* Background Effects */
@@ -98,7 +96,7 @@ body::before {
     color: var(--text-secondary);
     text-decoration: none;
     font-weight: 500;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.5rem;
     border-radius: 25px;
     transition: var(--transition);
 }
@@ -114,11 +112,10 @@ body::before {
     color: var(--text-primary) !important;
     padding: 0.5rem 1rem !important;
     border-radius: 25px;
-    margin-left: 1rem;
+    width:100%;
     transition: var(--transition);
     display: flex;
     align-items: center;
-    gap: 0.5rem;
 }
 
 .nav-download-btn:hover {
@@ -127,15 +124,15 @@ body::before {
 }
 
 .nav-toggle {
-    display: none; /* Sembunyikan checkbox */
+    display: none;
 }
 
 .nav-toggle-label {
-    display: none; /* Sembunyikan di desktop */
+    display: none;
     font-size: 1.5rem;
     color: var(--text-primary);
     cursor: pointer;
-    z-index: 1001; /* Pastikan di atas nav-links */
+    z-index: 1001;
 }
 
 /* Welcome Section */
@@ -200,6 +197,7 @@ body::before {
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    justify-content: center;
 }
 
 .btn.primary {
@@ -250,6 +248,8 @@ body::before {
 /* Section Styles */
 section {
     padding: 100px 0;
+    position: relative;
+    z-index: 0;
 }
 
 .section-header {
@@ -339,6 +339,32 @@ section {
     line-height: 1.6;
 }
 
+.skill-icons {
+    /* Mengatur layout icon */
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.skill-card:hover .skill-icons i {
+    transform: scale(1.1);
+}
+
+.skill-icons i {
+    font-size: 2.5rem;
+    transition: var(--transition);
+}
+
+.fa-python { color: #3776AB; }
+.fa-cplusplus { color: #00599C; }
+.fa-laravel { color: #FF2D20; }
+.fa-php { color: #777BB3; }
+.fa-html5 { color: #E34F26; }
+.fa-css3-alt { color: #1572B6; }
+.fa-database { color: #F7DF1E; }
+.fa-java { color: #ED8B00; }
+
 .skill-tags {
     display: flex;
     flex-wrap: wrap;
@@ -354,8 +380,7 @@ section {
     border: 1px solid rgba(0, 212, 255, 0.3);
 }
 
-/* Set progress values using CSS custom properties */
-.circular-progress[data-value="90"] { --progress: 90; }
+.circular-progress[data-value="60"] { --progress: 60; }
 .circular-progress[data-value="70"] { --progress: 70; }
 .circular-progress[data-value="80"] { --progress: 80; }
 .circular-progress[data-value="85"] { --progress: 85; }
@@ -373,19 +398,6 @@ section {
     padding-left: 2rem;
     border-left: 2px solid var(--primary-color);
     position: relative;
-}
-
-.timeline-item::before {
-    content: '';
-    position: absolute;
-    left: -11px;
-    top: 0;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: var(--primary-color);
-    border: 4px solid var(--dark-bg);
-    box-shadow: var(--glow);
 }
 
 .timeline-content {
@@ -466,6 +478,7 @@ section {
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: var(--transition);
+    transform: translateZ(0);
 }
 
 .certificate-card:hover {
@@ -762,31 +775,22 @@ section {
 
     /* Sembunyikan nav-links di mobile secara default */
     .nav-links {
-    /* Pertahankan semua style posisi & layout */
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background: rgba(10, 10, 15, 0.95);
-    backdrop-filter: blur(10px);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-
-    /* Pastikan display: flex dan atur arahnya */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1rem 0;
-
-    /* --- Tambahkan ini untuk Transisi Halus --- */
-
-    /* 1. Atur kondisi awal (tersembunyi) */
-    opacity: 0;
-    transform: translateY(-20px); /* Mulai 20px di atas */
-    visibility: hidden;
-    pointer-events: none; /* Tidak bisa diklik saat tersembunyi */
-
-    /* 2. Tentukan durasi transisi */
-    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(10, 10, 15, 0.95);
+        backdrop-filter: blur(10px);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem 0;
+        opacity: 0;
+        transform: translateY(-20px);
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
     }
 
     .nav-links a {
@@ -801,33 +805,37 @@ section {
     
     .nav-download-btn {
         margin-top: 0.5rem;
-        width: 80%;
         justify-content: center;
+        padding: 1rem 0;
     }
 
     /* Logika untuk menampilkan menu saat checkbox di-klik */
     .nav-toggle:checked ~ .nav-links {
-    opacity: 1;
-    transform: translateY(0);
-    visibility: visible;
-    pointer-events: auto;
+        opacity: 1;
+        transform: translateY(0);
+        visibility: visible;
+        pointer-events: auto;
     }
 
     /* Ubah ikon hamburger (bars) menjadi ikon tutup (times) */
     .nav-toggle:checked ~ .nav-toggle-label i::before {
-        content: '\f00d'; /* Font Awesome 'times' (close) icon */
+        content: '\f00d';
         font-family: 'Font Awesome 6 Free'; 
         font-weight: 900;
     }
 
     .nav-toggle-label i::before {
-        content: '\f0c9'; /* Font Awesome 'bars' icon */
+        content: '\f0c9';
         font-family: 'Font Awesome 6 Free'; 
         font-weight: 900;
     }
+    .profile-image {
+        order: 1; /* Akan ditampilkan terlebih dahulu */
+    }
 
-    
-    /* Atur ulang style responsif lainnya */
+    .welcome-text {
+        order: 2; /* Akan ditampilkan setelah gambar */
+    }   
     .welcome-text h1 {
         font-size: 2.5rem;
     }
@@ -1133,13 +1141,13 @@ section {
 
 @media (hover: none) and (pointer: coarse) {
     .btn.primary:hover {
-        transform: none; /* Nonaktifkan animasi gerak */
-        box-shadow: var(--glow); /* Kembalikan ke shadow normal */
+        transform: none;
+        box-shadow: var(--glow); 
     }
 
     .btn.secondary:hover {
-        background: transparent; /* Kembalikan ke background normal */
-        transform: none; /* Nonaktifkan animasi gerak */
-        color: var(--text-primary); /* Kembalikan ke warna normal */
+        background: transparent;
+        transform: none;
+        color: var(--text-primary);
     }
 }
